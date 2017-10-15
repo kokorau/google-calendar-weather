@@ -1,0 +1,16 @@
+function getWeatherData() {
+  // === get weather ===
+  var response = UrlFetchApp.fetch("http://weather.livedoor.com/forecast/webservice/json/v1?city=130010"); //URL+cityID(130010: tokyo)
+ 
+  var json=JSON.parse(response.getContentText());
+ 
+  var weather = json["forecasts"][0]["telop"]; 
+  var temp = json["forecasts"][0]["temperature"]["max"]["celsius"] + "℃"; 
+
+  var text = weather + ' ' + temp
+  
+  // === calendar ===
+  var id="### hoge ###@group.calendar.google.com"; // your google calendar ID
+  var calendar = CalendarApp.getCalendarById(id)
+  var event = calendar.createAllDayEvent(text, new Date());
+}
